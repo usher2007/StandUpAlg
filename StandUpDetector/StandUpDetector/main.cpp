@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 
 		if(index == 0)
 		{
-			bgSubtractor(frame, gbmForeground, 0.01);
+			bgSubtractor(frame, gbmForeground, 0.02);
 			threshold(gbmForeground, gbmForeground, 128, 255, THRESH_BINARY);
 			cap>>frame;
 			continue;
