@@ -3,8 +3,10 @@ fileDir = '..\DataRes\';
 scrsz = get(0,'ScreenSize');
 figure1 = figure('Position',[0 30 scrsz(3) scrsz(4)-95]);
 
-positions = zeros(1,25);
-for i=1:4148
+cacheCount = 35;
+positions = ones(1,cacheCount)*576;
+slopes = zeros(1,4148);
+for i=70:249
     clf;
     fileName = strcat(fileDir,num2str(i));
     fileName = strcat(fileName,'.bmp');
@@ -91,14 +93,20 @@ for i=1:4148
     plot(pos, weight, 'r+', 'linewidth', 2);
     axis([0 576 0 35000]);
     
-    positions(1,1:24) = positions(1,2:25);
-    if weight > 1000
-        positions(1,25) = pos;
+    positions(1,1:cacheCount-1) = positions(1,2:cacheCount);
+    if weight > 2000 && pos < 250
+        positions(1,cacheCount) = pos;
     else
-        positions(1,25) = position(1,24);
+        %positions(1,cacheCount) = positions(1,cacheCount-1);
+        if mean(positions) > 250
+            positions(1,cacheCount) = 250;
+        else
+            positions(1,cacheCount) = mean(positions);
+        end
     end
-    if i > 25
-        
+    
+    if i > 70+cacheCount
+        slopes(1,i) = GetSlope(positions(1,1:cacheCount));
     end
-    saveas(gcf,num2str(i),'bmp');
+    %saveas(gcf,num2str(i),'bmp');
 end

@@ -1,13 +1,14 @@
 function [ slope ] = GetSlope( Y )
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
-    X = [1:1:25];
+    cacheCount = 35;
+    X = [1:1:cacheCount];
     
     A = sum(X.*X);
     B = sum(X);
     C = sum(X.*Y);
     D = sum(Y);
     
-    slope = (C*25 - B*D)/(A*25 - B*B);
+    slope = (C*cacheCount - B*D)/(A*cacheCount - B*B);
 end
 
